@@ -66,15 +66,13 @@ export const api = {
 }
 
 export function money(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: value % 1 === 0 ? 0 : 2,
+  return '৳ ' + new Intl.NumberFormat('en-BD', {
+    maximumFractionDigits: 0,
   }).format(value)
 }
 
-export const FREE_SHIPPING_AT = 250
-export const SHIPPING_FEE = 28
+export const FREE_SHIPPING_AT = 5000
+export const SHIPPING_FEE = 100
 
 export function shippingFor(subtotal: number) {
   return subtotal >= FREE_SHIPPING_AT || subtotal === 0 ? 0 : SHIPPING_FEE

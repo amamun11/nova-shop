@@ -5,3 +5,4 @@ frontend/dist
 .git
 .DS_Store
 backend/storage/logs/*
+

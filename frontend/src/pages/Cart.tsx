@@ -11,11 +11,11 @@ export function CartPage() {
   if (items.length === 0) {
     return (
       <div className="page narrow">
-        <p className="eyebrow">Bag</p>
-        <h1>Your bag is empty.</h1>
-        <p className="lede">The collection is small, and the good pieces go quickly.</p>
+        <p className="eyebrow">ব্যাগ</p>
+        <h1>আপনার ব্যাগ খালি।</h1>
+        <p className="lede">এখনই কেনাকাটা শুরু করুন — সেরা পণ্যগুলো দ্রুত শেষ হয়ে যায়।</p>
         <Link className="btn" to="/shop">
-          Continue shopping
+          শপিং করুন
         </Link>
       </div>
     )
@@ -24,8 +24,8 @@ export function CartPage() {
   return (
     <div className="page">
       <header className="page-head">
-        <p className="eyebrow">Bag</p>
-        <h1>Ready when you are.</h1>
+        <p className="eyebrow">ব্যাগ</p>
+        <h1>চলুন অর্ডার করি!</h1>
       </header>
       <div className="split">
         <ul className="lines">
@@ -47,7 +47,7 @@ export function CartPage() {
                     onChange={(quantity) => setQuantity(line.product.id, quantity)}
                   />
                   <button type="button" className="text-link" onClick={() => remove(line.product.id)}>
-                    Remove
+                    সরিয়ে দিন
                   </button>
                 </div>
               </div>
@@ -55,22 +55,22 @@ export function CartPage() {
           ))}
         </ul>
         <aside className="summary">
-          <h2>Summary</h2>
+          <h2>সারসংক্ষেপ</h2>
           <p>
-            <span>Subtotal</span>
+            <span>সাবটোটাল</span>
             <span>{money(subtotal)}</span>
           </p>
           <p>
-            <span>Shipping</span>
-            <span>{shipping === 0 ? 'Complimentary' : money(shipping)}</span>
+            <span>ডেলিভারি চার্জ</span>
+            <span>{shipping === 0 ? 'বিনামূল্যে' : money(shipping)}</span>
           </p>
           <p className="total">
-            <span>Total</span>
+            <span>মোট</span>
             <span>{money(total)}</span>
           </p>
-          <p className="muted">{subtotal >= 250 ? 'You’ve reached complimentary shipping.' : `Add ${money(250 - subtotal)} for complimentary shipping.`}</p>
+          <p className="muted">{subtotal >= 5000 ? 'বিনামূল্যে ডেলিভারি পেয়েছেন! 🎉' : `আরও ${money(5000 - subtotal)} কিনলে বিনামূল্যে ডেলিভারি পাবেন।`}</p>
           <Link className="btn" to="/checkout">
-            Checkout
+            চেকআউট করুন
           </Link>
         </aside>
       </div>
