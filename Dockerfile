@@ -2,15 +2,14 @@
 FROM node:22-alpine AS frontend-builder
 WORKDIR /app
 
-COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install
+COPY frontend/package*.json ./
+RUN npm install
 
-COPY frontend ./frontend
-COPY backend/public ./backend/public
-RUN cd frontend && npm run build
+COPY frontend ./
+RUN npm run build
 
-# Stage 2: Production PHP Application
-FROM php:8.3-cli-alpine
+# Stage 2: Production PHP Application (PHP 8.4 required by Laravel 13 & Symfony 8)
+FROM php:8.4-cli-alpine
 
 RUN apk add --no-cache \
     sqlite-dev \
@@ -27,11 +26,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 COPY backend /var/www
-COPY --from=frontend-builder /app/backend/public /var/www/public
-
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+COPY --from=frontend-builder /app/dist/. /var/www/public/
 
 RUN cp -n .env.example .env || true && \
+    composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs && \
     php artisan key:generate --force && \
     mkdir -p /var/www/database && \
     touch /var/www/database/database.sqlite && \
